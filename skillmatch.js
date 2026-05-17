@@ -38,6 +38,8 @@ const vagas = [
 
 console.log(`Total de vagas carregadas no sistema: ${vagas.length}`);
 
+let maiorPorcentagem = -1;
+let vagaMaisCompativel = null;
 
 // RF03 – CALCULAR COMPATIBILIDADE COM CADA VAGA
 vagas.forEach(vaga => {
@@ -84,4 +86,20 @@ let classificacao = "";
       console.log(` - ${habilidade}`);
     });
   }
+  // 7. RF06: Lógica para encontrar a vaga com maior aderência
+  if (porcentagem > maiorPorcentagem) {
+    maiorPorcentagem = porcentagem;
+    vagaMaisCompativel = vaga;
+  }
+
+  // Vaga mais compativel
+  console.log("\n====================================================");
+if (vagaMaisCompativel) {
+  console.log("Vaga mais compatível:");
+  console.log(`${vagaMaisCompativel.empresa} - ${vagaMaisCompativel.cargo}`);
+  console.log(`Compatibilidade: ${maiorPorcentagem.toFixed(0)}%`);
+} else {
+  console.log("Nenhuma vaga encontrada.");
+}
+console.log("====================================================\n");
 });
