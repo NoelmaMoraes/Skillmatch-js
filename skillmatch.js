@@ -72,4 +72,16 @@ let classificacao = "";
   console.log(`Habilidades encontradas: ${habilidadesEncontradas.join(", ") || "Nenhuma"}`);
   console.log(`Habilidades faltantes: ${habilidadesFaltantes.join(", ") || "Nenhuma"}`);
   console.log(`Classificação: ${classificacao}`); 
+
+// Habilidades faltantes
+  console.log(`\nPara a vaga da ${vaga.empresa}, faltam:`);
+  
+  if (habilidadesFaltantes.length === 0) {
+    console.log(" - Nenhuma! Você preenche todos os requisitos.");
+  } else {
+    
+    habilidadesFaltantes.forEach(habilidade => {
+      console.log(` - ${habilidade}`);
+    });
+  }
 });
