@@ -30,10 +30,46 @@ const vagas = [
     id: 3,
     empresa: "WebSolutions",
     cargo: "Programador JavaScript Júnior",
-    requisitos: ["JavaScript", "HTML", "CSS", "Lógica de Programação"],
+    requisitos: ["JavaScript", "Arrays", "Objetos", "Funções"],
     salario: 3000,
     modalidade: "Presencial"
   }
 ];
 
 console.log(`Total de vagas carregadas no sistema: ${vagas.length}`);
+
+
+// RF03 – CALCULAR COMPATIBILIDADE COM CADA VAGA
+vagas.forEach(vaga => {
+  // Filtra as habilidades do candidato e da vaga
+  const habilidadesEncontradas = vaga.requisitos.filter(req => 
+    candidato.habilidades.includes(req)
+  );
+
+  // Filtra as habilidades que a vaga pede, mas o candidato NÃO tem
+  const habilidadesFaltantes = vaga.requisitos.filter(req => 
+    !candidato.habilidades.includes(req)
+  );
+
+  // Fórmula matemática
+  const porcentagem = (habilidadesEncontradas.length / vaga.requisitos.length) * 100;
+
+  // Definir a classificação com base na porcentagem
+let classificacao = "";
+  if (porcentagem >= 80) {
+    classificacao = "Alta compatibilidade"; // De 80% a 100%
+  } else if (porcentagem >= 50) {
+    classificacao = "Média compatibilidade"; // De 50% a 79%
+  } else {
+    classificacao = "Baixa compatibilidade"; // De 0% a 49%
+  }
+
+  // Resultado que vai aparecer
+  console.log("--------------------------------====================");
+  console.log(`Empresa: ${vaga.empresa}`);
+  console.log(`Cargo: ${vaga.cargo}`);
+  console.log(`Compatibilidade: ${porcentagem.toFixed(0)}%`);
+  console.log(`Habilidades encontradas: ${habilidadesEncontradas.join(", ") || "Nenhuma"}`);
+  console.log(`Habilidades faltantes: ${habilidadesFaltantes.join(", ") || "Nenhuma"}`);
+  console.log(`Classificação: ${classificacao}`); 
+});
