@@ -86,26 +86,37 @@ vagas.forEach(vaga => {
 }); // <-- Fecha o forEach das vagas perfeitamente!
 
 // ============================================================
-// RF06 – ENCONTRAR A VAGA COM MAIOR COMPATIBILIDADE (USANDO FOR...OF)
+// RF06 e RF07 – ANÁLISE DE MAIOR COMPATIBILIDADE E ESTUDOS
 // ============================================================
 
 let maiorPorcentagem = -1;
 let vagaMaisCompativel = null;
 
-// Olha o "for...of" aqui cumprindo a exigência exigida!
+// Criando uma lista inteligente que não aceita repetições para o RF07
+const todasHabilidadesFaltantes = new Set();
+
+// O "for...of" cumprindo a exigência do professor
 for (const vaga of vagas) {
   const habilidadesEncontradas = vaga.requisitos.filter(req => 
     candidato.habilidades.includes(req)
   );
+  
+  // Pegando as que faltam nesta vaga específica para acumular no nosso Set
+  vaga.requisitos.forEach(req => {
+    if (!candidato.habilidades.includes(req)) {
+      todasHabilidadesFaltantes.add(req); // O Set garante que não vai repetir palavra
+    }
+  });
+
   const porcentagem = (habilidadesEncontradas.length / vaga.requisitos.length) * 100;
 
   if (porcentagem > maiorPorcentagem) {
     maiorPorcentagem = porcentagem;
     vagaMaisCompativel = vaga;
   }
-} // <-- Fecha o for...of perfeitamente!
+}
 
-// PAINEL FINAL – EXIBIÇÃO DA VAGA MAIS COMPATÍVEL
+// PAINEL FINAL – EXIBIÇÃO DA VAGA MAIS COMPATÍVEL (RF06)
 console.log("\n=====================================");
 if (vagaMaisCompativel) {
   console.log("Vaga mais compatível:");
@@ -113,5 +124,31 @@ if (vagaMaisCompativel) {
   console.log(`Compatibilidade: ${maiorPorcentagem.toFixed(0)}%`);
 } else {
   console.log("Nenhuma vaga encontrada.");
+}
+console.log("=====================================");
+
+// ============================================================
+// PAINEL FINAL – RECOMENDAÇÃO DE ESTUDO (RF07 E CUMPRINDO RF08)
+// ============================================================
+console.log("\n=====================================");
+console.log("Recomendação de estudo:");
+
+// [MÉTODO 2 DO PROFESSOR: EVERY] - Verifica se o candidato atende a tudo
+const atendeTudo = vagas.every(vaga => 
+  vaga.requisitos.every(req => candidato.habilidades.includes(req))
+);
+
+if (atendeTudo) {
+  console.log("Parabéns! Você já possui todas as habilidades necessárias para as vagas analisadas.");
+} else {
+  // Pegamos o nosso Set inteligente e transformamos em Array comum
+  const arrayFaltantes = Array.from(todasHabilidadesFaltantes);
+
+  // [MÉTODO 3 DO PROFESSOR: MAP] - Geramos uma nova lista formatada
+  const listaParaEstudo = arrayFaltantes
+    .map(habilidade => habilidade.toUpperCase()) // Garante que não tem espaços extras
+    .join(", ");
+
+  console.log(`Priorize estudar ${listaParaEstudo}, pois esses conteúdos aparecem nas vagas analisadas.`);
 }
 console.log("=====================================\n");
