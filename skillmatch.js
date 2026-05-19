@@ -193,4 +193,3 @@ async function iniciarSistema() {
 // EXECUTA O SISTEMA INTEIRO
 iniciarSistema();
 
-// Fim do arquivo - Sistema de Análise de Vagas finalizado com sucesso.
